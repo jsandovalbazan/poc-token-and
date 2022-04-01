@@ -9,7 +9,6 @@ import pro.jsandoval.poctoken.domain.model.AccessToken
  */
 
 interface FirebaseRepository {
-
     suspend fun getAccessToken(): Flow<DataState<AccessToken>>
-
+    suspend fun isInMaintenance(): Flow<Boolean>
 }

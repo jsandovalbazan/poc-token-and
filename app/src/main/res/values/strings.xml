@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">PoC AccessToken</string>
+    <string name="app_name">PoC FE+Simple</string>
+    <string name="app_in_maintenance">La aplicación se encuentra en mantenimiento.</string>
 </resources>

@@ -6,14 +6,23 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import pro.jsandoval.poctoken.core.MessageType
-import pro.jsandoval.poctoken.domain.usecase.GetAccessTokenUseCase
+import pro.jsandoval.poctoken.domain.usecase.access_token.GetAccessTokenUseCase
+import pro.jsandoval.poctoken.domain.usecase.maintenance.GetMaintenanceFlagUseCase
 import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val getAccessTokenUseCase: GetAccessTokenUseCase
+    private val getAccessTokenUseCase: GetAccessTokenUseCase,
+    private val getMaintenanceFlagUseCase: GetMaintenanceFlagUseCase
 ) : ViewModel() {
+
+    fun checkIsAppInMaintenance(): Flow<MainViewState> = flow {
+        getMaintenanceFlagUseCase.invoke().collect { inMaintenance ->
+            if (inMaintenance) emit(MainViewState.InMaintenance)
+            else emit(MainViewState.CanProceed)
+        }
+    }
 
     fun getAccessToken(): Flow<MainViewState> = flow {
         getAccessTokenUseCase().collect { dataState ->
